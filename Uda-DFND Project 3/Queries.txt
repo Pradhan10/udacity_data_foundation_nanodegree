@@ -1,0 +1,38 @@
+/*Question 1
+Use your query to return the country and listener count of all Jazz Music listeners.
+Return your list ordered by listener count descennding order.
+*/
+SELECT
+  Country,
+  COUNT(*) as Listeners
+FROM Customer
+JOIN Invoice
+  ON Customer.CustomerId = Invoice.CustomerId
+JOIN InvoiceLine
+  ON InvoiceLine.InvoiceId = Invoice.InvoiceId
+JOIN Track
+  ON Track.TrackId = InvoiceLine.TrackId
+JOIN Genre
+  ON Genre.GenreId = Track.GenreId
+WHERE Genre.Name = 'Jazz'
+GROUP BY Country
+ORDER BY 2 DESC;
+
+
+/*Question 2: Which BillingCountry has the best customers?
+
+We would like to throw a promotional Music Festivals in the Country we made the most money.
+Write a query that returns the top 4 city from country that has the highest sum of invoice totals.
+Return both the city name and the sum of all invoice totals.
+*/
+SELECT
+  BillingCity,
+  SUM(total)
+FROM Invoice
+WHERE BillingCountry = 'USA'
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 4;
+
+
+
